@@ -14,11 +14,12 @@
 	overflow: hidden;
 	display: flex;
 	flex-direction: column;
-    max-height: 22.526041666666668vw;
-    max-width: 90vw;
-    height: 160.1851851851852px;
-    width: 640px;
-    border-radius: .5em;
+    justify-content: space-between;
+	max-height: 22.526041666666668vw;
+	max-width: 90vw;
+	height: 160.1851851851852px;
+	width: 640px;
+	border-radius: 0.5em;
 }
 
 .formContainer {
@@ -27,4 +28,22 @@
 	display: flex;
 	flex-direction: column;
 	gap: 1em;
+}
+
+.responses {
+	font-size: 1.75em;
+    padding: .75em 1em 0 1em;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1em 1em 1em;
+}
+
+.line {
+    width: 100%;
+    height: 1px;
+    background-color: rgb(187, 187, 187);
 }

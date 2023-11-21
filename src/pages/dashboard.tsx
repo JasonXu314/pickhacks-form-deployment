@@ -7,6 +7,9 @@ import Head from 'next/head';
 import InputField from '../components/InputField';
 import RadioField from '../components/RadioField';
 import Schedule from '../components/Schedule';
+import ArrowSwitcher from '../components/ArrowSwitcher';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface IData {
 	name: string;
@@ -21,7 +24,7 @@ const Dashboard = () => {
 	const { user, error, isLoading } = useUser();
 	const [admin, setAdmin] = useState(false);
 	const [data, setData] = useState<IData[]>([]);
-	const [index, setIndex] = useState(0);
+	const [index, setIndex] = useState(1);
 
 	const router = useRouter();
 
@@ -65,18 +68,23 @@ const Dashboard = () => {
 				</Head>
 				<main className={styles.main}>
 					<div className={styles.header}>
-						<h1>{data.length} responses</h1>
-                        <p>{index + 1} of {data.length}</p>
-                        <p onClick={() => setIndex((index) => index + 1)}>next</p>
+						<p className={styles.responses}>{data.length} responses</p>
+                        <div className={styles.line}></div>
+						<div className={styles.row}>
+							<ArrowSwitcher index={index} setIndex={setIndex} maxSize={data.length} />
+							<IconButton size="large">
+								<DeleteIcon />
+							</IconButton>
+						</div>
 					</div>
 					{data.length > 0 && (
 						<div className={styles.formContainer}>
-							<InputField question="What is your name?" disabled required value={data[index].name} error={error === 'name'} />
-							<InputField question="What is your university email?" required value={data[index].email} error={error === 'email'} disabled />
+							<InputField question="What is your name?" disabled required value={data[index - 1].name} error={error === 'name'} />
+							<InputField question="What is your university email?" required value={data[index - 1].email} error={error === 'email'} disabled />
 							<RadioField
 								question="What year are you?"
 								required
-								value={data[index].year}
+								value={data[index - 1].year}
 								options={['Freshman', 'Sophomore', 'Junior', 'Senior', 'Grad Student']}
 								error={error === 'year'}
 								disabled
@@ -84,7 +92,7 @@ const Dashboard = () => {
 							<RadioField
 								question="What is your first choice team?"
 								required
-								value={data[index].firstChoice}
+								value={data[index - 1].firstChoice}
 								options={['Design/Art', 'Marketing', 'Development', 'Finance', 'Logistics']}
 								error={error === 'firstChoice'}
 								disabled
@@ -92,7 +100,7 @@ const Dashboard = () => {
 							<RadioField
 								question="What is your second choice team?"
 								required
-								value={data[index].secondChoice}
+								value={data[index - 1].secondChoice}
 								options={['Design/Art', 'Marketing', 'Development', 'Finance', 'Logistics']}
 								error={error === 'secondChoice'}
 								disabled
