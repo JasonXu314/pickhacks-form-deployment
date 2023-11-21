@@ -4,13 +4,13 @@ import { useState, useRef } from 'react';
 import Header from '../components/Header';
 import styles from '../styles/Home.module.css';
 import InputField from '../components/InputField';
-import SelectField from '../components/SelectField';
 import RadioField from '../components/RadioField';
 import { Button, Fab } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios';
 import Schedule from '../components/Schedule';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import Link from 'next/link';
 
 declare module '@mui/material/styles' {
 	interface Palette {
@@ -60,7 +60,6 @@ const Home: NextPage = () => {
 	const yearRef = useRef<HTMLDivElement>(null);
 	const firstChoiceRef = useRef<HTMLDivElement>(null);
 	const secondChoiceRef = useRef<HTMLDivElement>(null);
-    const navigate = useNavigate();
 
 	const submitHandler = () => {
 		if (!name) {
@@ -82,7 +81,7 @@ const Home: NextPage = () => {
 			setError('schedule');
 		} else {
 			axios
-				.post('/api/submit', {
+				.post('/api/data', {
 					name,
 					email,
 					year,
@@ -162,9 +161,11 @@ const Home: NextPage = () => {
 							</>
 						)}
 					</div>
-					<Fab sx={{ position: 'fixed', bottom: '2em', right: '2em', backgroundColor: 'white' }}>
-						<VisibilityIcon />
-					</Fab>
+					<Link href="/api/auth/login?returnTo=/dashboard">
+						<Fab sx={{ position: 'fixed', bottom: '2em', right: '2em', backgroundColor: 'white' }}>
+							<VisibilityIcon />
+						</Fab>
+					</Link>
 				</main>
 			</ThemeProvider>
 		</>

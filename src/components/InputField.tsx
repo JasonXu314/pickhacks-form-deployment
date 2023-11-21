@@ -7,11 +7,12 @@ interface IProps {
 	question: string;
 	required?: boolean;
 	value: string;
-	setValue: React.Dispatch<SetStateAction<string>>;
+	setValue?: React.Dispatch<SetStateAction<string>>;
 	error: boolean;
+    disabled?: boolean;
 }
 
-const InputField = React.forwardRef(function InputField({ question, required, value, setValue, error }: IProps, ref: React.ForwardedRef<HTMLDivElement>) {
+const InputField = React.forwardRef(function InputField({ question, required, value, setValue, error, disabled }: IProps, ref: React.ForwardedRef<HTMLDivElement>) {
 	return (
 		<div className={styles.box} style={{ outline: error ? '1px solid rgb(217,48,37)' : 0 }}>
 			<p style={{ marginBottom: '1.75em' }}>
@@ -25,6 +26,7 @@ const InputField = React.forwardRef(function InputField({ question, required, va
 				placeholder="Your answer"
 				error={error}
                 inputRef={ref}
+                disabled={disabled}
 				sx={{
 					'.MuiFilledInput-root': {
 						backgroundColor: 'white',
@@ -37,6 +39,9 @@ const InputField = React.forwardRef(function InputField({ question, required, va
                     '& .MuiFilledInput-root.Mui-focused': {
                         backgroundColor: 'white',
                     },
+                    '& .MuiFilledInput-root.Mui-disabled': {
+                        backgroundColor: 'white',
+                    },
 					pb: 1,
 					maxWidth: '50%',
 				}}
@@ -47,7 +52,7 @@ const InputField = React.forwardRef(function InputField({ question, required, va
 					},
 				}}
 				value={value}
-				onChange={(e) => setValue(e.target.value)}
+				onChange={(e) => setValue ? setValue(e.target.value) : ""}
 			/>
 			{error && <Required />}
 		</div>
