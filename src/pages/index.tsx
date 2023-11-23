@@ -1,6 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Header from '../components/Header';
 import styles from '../styles/Home.module.css';
 import InputField from '../components/InputField';
@@ -11,6 +11,7 @@ import axios from 'axios';
 import Schedule from '../components/Schedule';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import Link from 'next/link';
+import Loading from '../components/Loading';
 
 declare module '@mui/material/styles' {
 	interface Palette {
@@ -61,6 +62,22 @@ const Home: NextPage = () => {
 	const firstChoiceRef = useRef<HTMLDivElement>(null);
 	const secondChoiceRef = useRef<HTMLDivElement>(null);
 
+    const [init, setInit] = useState(true);
+    const [accepting, setAccepting] = useState(false);
+    const [message, setMessage] = useState('');
+
+    useEffect(() => {
+        axios.get('/api/settings')
+        .then((resp) => {
+            setAccepting(resp.data.accepting);
+            setMessage(resp.data.message)
+            setInit(false);
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }, [])
+
 	const submitHandler = () => {
 		if (!name) {
 			setError('name');
@@ -105,6 +122,8 @@ const Home: NextPage = () => {
 		}
 	};
 
+    if (init) return <Loading />
+
 	return (
 		<>
 			<Head>
@@ -115,8 +134,8 @@ const Home: NextPage = () => {
 				<main className={styles.main}>
 					<img src="/banner.png" className={styles.banner}></img>
 					<div className={styles.formContainer}>
-						<Header submitted={submitted} setSubmitted={setSubmitted} />
-						{!submitted && (
+						<Header submitted={submitted} setSubmitted={setSubmitted} accepting={accepting} message={message}/>
+						{!submitted && accepting && (
 							<>
 								<InputField question="What is your name?" required value={name} setValue={setName} error={error === 'name'} ref={nameRef} />
 								<InputField

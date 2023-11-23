@@ -8,7 +8,7 @@ interface IProps {
 	required?: boolean;
 	value: string;
 	setValue?: React.Dispatch<SetStateAction<string>>;
-	error: boolean;
+	error?: boolean;
     disabled?: boolean;
 }
 

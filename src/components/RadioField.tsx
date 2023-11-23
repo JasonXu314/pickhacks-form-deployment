@@ -9,7 +9,7 @@ interface IProps {
 	value: string;
 	setValue?: React.Dispatch<SetStateAction<string>>;
 	options: string[] | number[];
-	error: boolean;
+	error?: boolean;
     disabled?: boolean;
 }
 

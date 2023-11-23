@@ -8,7 +8,7 @@ interface IProps {
 	value: string;
 	setValue: React.Dispatch<SetStateAction<string>>;
 	options: string[] | number[];
-	error: boolean;
+	error?: boolean;
 }
 
 const SelectField = ({ question, required, value, setValue, options, error }: IProps) => {

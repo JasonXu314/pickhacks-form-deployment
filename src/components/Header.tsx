@@ -3,26 +3,64 @@ import styles from '../styles/components/Header.module.css';
 
 interface IProps {
 	submitted: boolean;
-    setSubmitted: React.Dispatch<SetStateAction<boolean>>;
+	setSubmitted: React.Dispatch<SetStateAction<boolean>>;
+	accepting: boolean;
+	message: string;
 }
 
-const Header = ({ submitted, setSubmitted }: IProps) => {
+const Header = ({ submitted, setSubmitted, accepting, message }: IProps) => {
 	if (submitted) {
 		return (
 			<div className={styles.box}>
 				<div className={styles.accentLine}></div>
 				<div className={styles.container}>
-					<p className={styles.title} style={{marginTop: '10px'}}>ACM Hack Recruitment Application</p>
+					<p className={styles.title} style={{ marginTop: '10px' }}>
+						ACM Hack Recruitment Application
+					</p>
 					<div>
-						<p className={styles.text}>
-							Your response has been recorded.
-						</p>
+						<p className={styles.text}>Your response has been recorded.</p>
 					</div>
 					<p className={styles.text} style={{ marginTop: '10px' }}>
-						<a onClick={() => setSubmitted(false)} style={{ color: 'rgb(26,115,232)', fontSize: '.95em', textDecoration: 'underline', cursor: 'pointer' }}>
+						<a
+							onClick={() => setSubmitted(false)}
+							style={{ color: 'rgb(26,115,232)', fontSize: '.95em', textDecoration: 'underline', cursor: 'pointer' }}
+						>
 							Submit another response
 						</a>
 					</p>
+				</div>
+			</div>
+		);
+	}
+
+	if (!accepting) {
+		return (
+			<div className={styles.box}>
+				<div className={styles.accentLine}></div>
+				<div className={styles.container}>
+					<p className={styles.title} style={{ marginTop: '10px' }}>
+						ACM Hack Recruitment Application
+					</p>
+					<div>
+						{message && <p className={styles.text}>{message}</p>}
+						{!message && (
+							<>
+								<p className={styles.text}>
+									The form ACM Hack Recruitment Application is no longer accepting responses.
+									<div style={{margin: '.25em'}}></div>
+									Try contacting the owner of the form if you think this is a mistake.
+								</p>
+							</>
+						)}
+					</div>
+					{/* <p className={styles.text} style={{ marginTop: '10px' }}>
+						<a
+							onClick={() => setSubmitted(false)}
+							style={{ color: 'rgb(26,115,232)', fontSize: '.95em', textDecoration: 'underline', cursor: 'pointer' }}
+						>
+							Submit another response
+						</a>
+					</p> */}
 				</div>
 			</div>
 		);
@@ -48,7 +86,7 @@ const Header = ({ submitted, setSubmitted }: IProps) => {
 						.
 					</b>
 				</p>
-                <p style={{color: '#D93025', fontSize: '.9em'}}>* Indicates required question</p>
+				<p style={{ color: '#D93025', fontSize: '.9em' }}>* Indicates required question</p>
 			</div>
 		</div>
 	);
