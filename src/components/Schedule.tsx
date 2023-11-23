@@ -11,9 +11,10 @@ interface IProps {
 	setSchedule?: React.Dispatch<SetStateAction<Date[]>>;
 	required: boolean;
 	error?: boolean;
+	defaultStart?: boolean;
 }
 
-const Schedule = ({ schedule, setSchedule, required, error }: IProps) => {
+const Schedule = ({ schedule, setSchedule, required, error, defaultStart }: IProps) => {
 	const [startDate, setStartDate] = useState<Date | undefined>(new Date());
 	const [days, setDays] = useState(5);
 
@@ -22,7 +23,10 @@ const Schedule = ({ schedule, setSchedule, required, error }: IProps) => {
 			.get('/api/settings')
 			.then((resp) => {
 				setStartDate(dayjs(resp.data.startDate).toDate());
-				setDays(Math.abs(dayjs(resp.data.startDate).diff(dayjs(resp.data.endDate), 'day')));
+				setDays(Math.abs(dayjs(resp.data.startDate).diff(dayjs(resp.data.endDate), 'day')) + 1);
+				if (defaultStart) {
+					setDays(dayjs(schedule[schedule.length - 1]).diff(dayjs(schedule[0]), 'day') + 1);
+				}
 			})
 			.catch((err) => {
 				console.log(err);
@@ -34,7 +38,7 @@ const Schedule = ({ schedule, setSchedule, required, error }: IProps) => {
 			<p style={{ marginBottom: '1em' }}>Select your availablity for interviews: {required && <span style={{ color: '#D93025' }}> *</span>}</p>
 			<ScheduleSelector
 				selection={schedule}
-				startDate={startDate}
+				startDate={!defaultStart ? startDate : undefined}
 				numDays={days}
 				minTime={16}
 				maxTime={21}
@@ -43,7 +47,9 @@ const Schedule = ({ schedule, setSchedule, required, error }: IProps) => {
 				onChange={(e) => (setSchedule ? setSchedule(e) : '')}
 				renderDateLabel={(date) => (
 					<p>
-						{date.toLocaleString('en-us', { weekday: 'long' }).substring(0, 3)}<br/>{date.getMonth()}/{date.getDate()}
+						{date.toLocaleString('en-us', { weekday: 'long' }).substring(0, 3)}
+						<br />
+						{date.getMonth() + 1}/{date.getDate()}
 					</p>
 				)}
 				unselectedColor="rgb(205, 223, 231)"

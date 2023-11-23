@@ -281,9 +281,9 @@ const Dashboard = () => {
 								Back to form
 							</Button>
 							<div style={{ display: 'flex', gap: '1em' }}>
-								{/* <Button variant="outlined" startIcon={<LogoutIcon />} onClick={() => setSignoutOpen(true)}>
+								<Button variant="outlined" startIcon={<LogoutIcon />} onClick={() => setSignoutOpen(true)}>
 									Sign Out
-								</Button> */}
+								</Button>
 								<Button variant="contained" startIcon={<PersonAddIcon />} onClick={() => setAdminOpen(true)}>
 									Add admin
 								</Button>
@@ -295,12 +295,9 @@ const Dashboard = () => {
 									<p className={styles.responses}>{data.length} responses</p>
                                     <DateChooser />
 								</div>
-								{/* <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between', flexWrap: 'wrap', gap: '.5em' }}> */}
-									{/* <DateChooser /> */}
                                     <Button variant="outlined" startIcon={<DeleteIcon />} onClick={() => setDeleteAllOpen(true)} disabled={index === 0} sx={{alignSelf: 'flex-start', marginLeft: 'auto'}}>
 										Delete all responses
 									</Button>
-								{/* </div> */}
                                 <AcceptingResponses />
 							</div>
 
@@ -339,7 +336,7 @@ const Dashboard = () => {
 									options={['Design/Art', 'Marketing', 'Development', 'Finance', 'Logistics']}
 									disabled
 								/>
-								<Schedule schedule={data[index - 1].schedule} required />
+								<Schedule schedule={data[index - 1].schedule} required defaultStart/>
 							</>
 						)}
 					</div>
