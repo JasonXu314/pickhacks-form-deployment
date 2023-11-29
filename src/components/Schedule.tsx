@@ -41,7 +41,7 @@ const Schedule = ({ schedule, setSchedule, required, error, defaultStart }: IPro
 				startDate={!defaultStart ? startDate : undefined}
 				numDays={days}
 				minTime={16}
-				maxTime={21}
+				maxTime={20}
 				hourlyChunks={2}
 				timeFormat="h:mma"
 				onChange={(e) => (setSchedule ? setSchedule(e) : '')}
