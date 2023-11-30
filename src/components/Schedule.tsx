@@ -25,20 +25,21 @@ const Schedule = ({ schedule, setSchedule, required, error, defaultStart }: IPro
 				setStartDate(dayjs(resp.data.startDate).toDate());
 				setDays(Math.abs(dayjs(resp.data.startDate).diff(dayjs(resp.data.endDate), 'day')) + 1);
 				if (defaultStart) {
+                    setStartDate(dayjs(schedule[0]).toDate());
 					setDays(dayjs(schedule[schedule.length - 1]).diff(dayjs(schedule[0]), 'day') + 1);
 				}
 			})
 			.catch((err) => {
 				console.log(err);
 			});
-	}, []);
+	}, [schedule, defaultStart]);
 
 	return (
 		<div className={styles.box} style={{ outline: error ? '1px solid rgb(217,48,37)' : 0 }}>
 			<p style={{ marginBottom: '1em' }}>Select your availablity for interviews: {required && <span style={{ color: '#D93025' }}> *</span>}</p>
 			<ScheduleSelector
 				selection={schedule}
-				startDate={!defaultStart ? startDate : undefined}
+				startDate={startDate}
 				numDays={days}
 				minTime={16}
 				maxTime={20}

@@ -18,7 +18,7 @@ const Header = ({ submitted, setSubmitted, accepting, message }: IProps) => {
 						ACM Hack Recruitment Application
 					</p>
 					<div>
-						<p className={styles.text}>Your response has been recorded.<br/><br/>You will be emailed a Zoom link soon to confirm your interview.<br/>If you have any questions feel free to reach out to msthackathon@umsystem.edu</p>
+						<p className={styles.text}>Your response has been recorded.<br/><br/>You will be emailed a Zoom link soon to confirm your interview.<br/>If you have any questions feel free to reach out to <b>msthackathon@umsystem.edu</b></p>
 					</div>
 					<p className={styles.text} style={{ marginTop: '10px' }}>
 						<a
