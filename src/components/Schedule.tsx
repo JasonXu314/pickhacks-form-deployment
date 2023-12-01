@@ -22,11 +22,12 @@ const Schedule = ({ schedule, setSchedule, required, error, defaultStart }: IPro
 		axios
 			.get('/api/settings')
 			.then((resp) => {
+                schedule.sort();
 				setStartDate(dayjs(resp.data.startDate).toDate());
 				setDays(Math.abs(dayjs(resp.data.startDate).diff(dayjs(resp.data.endDate), 'day')) + 1);
 				if (defaultStart) {
                     setStartDate(dayjs(schedule[0]).toDate());
-					setDays(dayjs(schedule[schedule.length - 1]).diff(dayjs(schedule[0]), 'day') + 1);
+					setDays(Math.round(dayjs(schedule[schedule.length - 1]).diff(dayjs(schedule[0]), 'day', true) + 1));
 				}
 			})
 			.catch((err) => {
