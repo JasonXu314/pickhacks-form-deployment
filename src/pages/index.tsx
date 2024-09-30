@@ -62,21 +62,22 @@ const Home: NextPage = () => {
 	const firstChoiceRef = useRef<HTMLDivElement>(null);
 	const secondChoiceRef = useRef<HTMLDivElement>(null);
 
-    const [init, setInit] = useState(true);
-    const [accepting, setAccepting] = useState(false);
-    const [message, setMessage] = useState('');
+	const [init, setInit] = useState(true);
+	const [accepting, setAccepting] = useState(false);
+	const [message, setMessage] = useState('');
 
-    useEffect(() => {
-        axios.get('/api/settings')
-        .then((resp) => {
-            setAccepting(resp.data.accepting);
-            setMessage(resp.data.message)
-            setInit(false);
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-    }, [])
+	useEffect(() => {
+		axios
+			.get('/api/settings')
+			.then((resp) => {
+				setAccepting(resp.data.accepting);
+				setMessage(resp.data.message);
+				setInit(false);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, []);
 
 	const submitHandler = () => {
 		if (!name) {
@@ -122,7 +123,7 @@ const Home: NextPage = () => {
 		}
 	};
 
-    if (init) return <Loading />
+	if (init) return <Loading />;
 
 	return (
 		<>
@@ -134,7 +135,7 @@ const Home: NextPage = () => {
 				<main className={styles.main}>
 					<img src="/banner.png" className={styles.banner}></img>
 					<div className={styles.formContainer}>
-						<Header submitted={submitted} setSubmitted={setSubmitted} accepting={accepting} message={message}/>
+						<Header submitted={submitted} setSubmitted={setSubmitted} accepting={accepting} message={message} />
 						{!submitted && accepting && (
 							<>
 								<InputField question="What is your name?" required value={name} setValue={setName} error={error === 'name'} ref={nameRef} />
@@ -160,7 +161,7 @@ const Home: NextPage = () => {
 									required
 									value={firstChoice}
 									setValue={setFirstChoice}
-									options={['Design/Art', 'Marketing', 'Development', 'Finance', 'Logistics']}
+									options={['Design/Art', 'Marketing', 'Finance', 'Logistics']}
 									error={error === 'firstChoice'}
 									ref={firstChoiceRef}
 								/>
@@ -169,7 +170,7 @@ const Home: NextPage = () => {
 									required
 									value={secondChoice}
 									setValue={setSecondChoice}
-									options={['Design/Art', 'Marketing', 'Development', 'Finance', 'Logistics']}
+									options={['Design/Art', 'Marketing', 'Finance', 'Logistics']}
 									error={error === 'secondChoice'}
 									ref={secondChoiceRef}
 								/>
